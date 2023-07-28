@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<script src="jquery-3.6.0.js"></script>
+		<meta name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>密码随机生成</title>
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body id="bac">
+		<div class="body">
+			<h1>
+				<span style="color:#ff0000">密</span>
+				<span style="color:#ff9900">码</span>
+				<span style="color:#ffcc00">随</span>
+				<span style="color:#66cc00">机</span>
+				<span style="color:#00ffcc">生</span>
+				<span style="color:#66ccff">成</span>
+			</h1>
+			<div class="felxs">
+				<div class="box">
+					<div class="felx">
+						<input class="" type="checkbox" name="option1" value="a" checked>
+						<label class="">大写字母(A-Z)</label>
+					</div>
+					<div class="felx">
+						<input class="" type="checkbox" name="option1" value="b" checked>
+						<label class="">小写字母(a-z)</label>
+					</div>
+				</div>
+				<div class="box">
+					<div class="felx">
+						<input class="" type="checkbox" name="option1" value="c" checked>
+						<label class="">数字(1-9)</label>
+					</div>
+					<div class="felx">
+						<input class="" type="checkbox" name="option1" value="d" checked>
+						<label class="">特殊字符(!@#$%^&*)</label>
+					</div>
+				</div>
+				<div class="box">
+					<div class="felx">
+						<label class="">密码位数</label>
+						<input class="" type="text" id="num" value="10">
+
+					</div>
+
+					<div class="felx">
+						<label class="">密码数量</label>
+						<input class="" type="text" id="number" value="5">
+
+					</div>
+				</div>
+			</div>
+			<div class="text">
+				<div>
+					<button class="button" id="tijiao" type="submit">生成密码</button>
+				</div>
+				<textarea style="font-size: 20px" id="put" rows="10" cols="40"></textarea>
+				<!--<p id="put">内容</p>-->
+
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	$(function() {
+		$("#tijiao").click(function() {
+			var arr = {};
+			$('input[name="option1"]:checked').each(function() {
+				// console.log($(this).val())
+				// arr={}
+				if ($(this).val() == "a" || $(this).val() == "b" || $(this).val() == "c" || $(this)
+					.val() == "d") {
+					var k = $(this).val()
+					if ($(this).val() == "a")
+						arr.a = true;
+					if ($(this).val() == "b")
+						arr.b = true;
+					if ($(this).val() == "c")
+						arr.c = true;
+					if ($(this).val() == "d")
+						arr.d = true;
+				}
+			});
+			var num = $("#num").val();
+			var number = $("#number").val();
+
+			arr.num = num;
+			arr.number = number;
+
+			// arr+="wei:"+$("#num").val();
+			console.log(arr);
+			// arrs = JSON.stringify(arr);
+			// console.log(arr)
+			$.post("getFileExt.php", arr, function(res) {
+
+				if (res) {
+					// console.log(res)
+					var put = $("#put");
+					// put.attr("rows",parseInt(number)+2);
+					// put.attr("cols",parseInt(num)+2);
+					put.html(res)
+				}
+			})
+			// alert(arr)
+		})
+	})
+
+
+
+
+	window.onload = function() {
+		var imgs = ["img/bac.gif", "img/bac2.gif", "img/bac3.gif"]; //（设定想要显示的图片）
+		var i = 0;
+		var head = document.getElementById("bac"); //获取DIV对象
+		head.style.background = "url(img/bac.gif)"; //设置图片的初始图片为该路径的图片
+		function time() {
+			i++;
+			i = i % 3; // 超过12则取余数，保证循环在0-12之间
+			head.style.background = "url(" + imgs[i] + ")";
+		}
+		setInterval(time, 5000); //循环调用time1()函数，时间间隔为2000ms
+		//setInterval()函数，按照指定的周期（按毫秒计）来调用函数或表达式
+	}
+</script>
